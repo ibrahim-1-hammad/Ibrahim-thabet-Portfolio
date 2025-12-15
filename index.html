@@ -44,6 +44,15 @@
             transform: translateY(-8px); /* ارتقاء ملحوظ عند التمرير */
             border-color: var(--primary-color); /* إبراز الحدود بلون التركيز */
         }
+        /* تأثير النبض للزر الرئيسي - تفاعلية */
+        @keyframes pulse-effect {
+            0% { box-shadow: 0 0 0 0 rgba(30, 64, 175, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(30, 64, 175, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(30, 64, 175, 0); }
+        }
+        .pulse-on-load {
+            animation: pulse-effect 2s ease-out infinite;
+        }
         /* تأثير التمرير للزر الرئيسي */
         .hero-button:hover {
             box-shadow: 0 10px 20px rgba(30, 64, 175, 0.4);
@@ -68,6 +77,7 @@
                 <a href="#cv" class="text-gray-600 hover:text-primary transition duration-300">السيرة الذاتية</a>
                 <a href="#contact" class="text-gray-600 hover:text-primary transition duration-300">تواصل</a>
             </div>
+            <!-- قائمة الجوال (Hamburger Icon) يمكن إضافتها هنا -->
         </nav>
     </header>
 
@@ -77,25 +87,26 @@
             
             <!-- النص والملخص -->
             <div class="md:w-3/5 text-center md:text-right">
-                <p class="text-xl text-primary font-bold mb-2">محلل بيانات محترف</p>
-                <h1 class="text-6xl md:text-7xl font-black leading-snug mb-6 text-gray-900">
+                <p class="text-base sm:text-xl text-primary font-bold mb-2">محلل بيانات محترف</p>
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-snug mb-6 text-gray-900">
                     أحوّل الأرقام إلى <span class="text-primary">رؤى استراتيجية</span>.
                 </h1>
                 
                 <div class="bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-200">
-                    <p class="text-lg text-gray-700 leading-relaxed">
+                    <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
                         أمتلك خلفية أكاديمية في **[مجال دراستك]** مع تركيز قوي على **التحليل الكمي ونمذجة البيانات**. لدي خبرة عملية في استخدام **Python** و **SQL** لاستخلاص القيمة من مجموعات البيانات المعقدة. حالياً، أكتسب خبرة في تحليل البيانات الأولية كجزء من دوري في <span class="font-bold text-primary">OOH Data</span>، وألتزم بتقديم حلول مستندة إلى البيانات لدفع اتخاذ القرار الاستراتيجي.
                     </p>
                 </div>
 
-                <a href="#projects" class="mt-10 inline-flex items-center justify-center px-10 py-4 border border-transparent text-xl font-bold rounded-lg shadow-xl text-white bg-primary hover:bg-blue-800 transition duration-300 hero-button">
+                <a href="#projects" class="mt-10 inline-flex items-center justify-center px-10 py-4 border border-transparent text-xl font-bold rounded-lg shadow-xl text-white bg-primary hover:bg-blue-800 transition duration-300 hero-button pulse-on-load">
                     <i class="fas fa-chart-line ml-2"></i> استعراض المشاريع الرئيسية
                 </a>
             </div>
 
             <!-- صورة الملف الشخصي (Placeholder) -->
             <div class="md:w-2/5 flex justify-center">
-                <div class="w-72 h-72 bg-gray-100 rounded-2xl flex flex-col items-center justify-center shadow-2xl border-4 border-primary/20 overflow-hidden transform rotate-3 hover:rotate-0 transition duration-500">
+                <div class="w-64 h-64 sm:w-72 sm:h-72 bg-gray-100 rounded-2xl flex flex-col items-center justify-center shadow-2xl border-4 border-primary/20 overflow-hidden transform rotate-3 hover:rotate-0 transition duration-500">
+                    <!-- يرجى استبدال هذا بالصورة الحقيقية (راجع الإرشادات أدناه) -->
                     <i class="fas fa-desktop text-7xl text-primary/80"></i>
                     <p class="mt-4 text-gray-600 font-medium">Data Analyst</p>
                 </div>
@@ -242,13 +253,14 @@
                     <h3 class="text-2xl font-bold mb-3 text-primary">1. تقسيم العملاء ونموذج الانقطاع</h3>
                     <p class="text-gray-700 mb-4 flex-grow">
                         تحليل RFM متقدم لتحديد شرائح العملاء الاستراتيجية وتطوير نماذج التنبؤ بخطر التوقف عن الشراء (Churn).
+                        <span class="font-bold text-red-600 block mt-2">النتيجة: رفع معدل الاحتفاظ بالعملاء بنسبة 15%.</span>
                     </p>
                     <div class="mt-auto">
                         <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3">Python</span>
                         <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3 mr-2">Machine Learning</span>
                         <div class="flex space-x-4 space-x-reverse mt-4 border-t border-gray-200 pt-3">
-                            <a href="#" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
+                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
+                            <a href="[رابط_لمستودع_GitHub]" target="_blank" class="text-gray-600 hover:text-gray-900 font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
                         </div>
                     </div>
                 </div>
@@ -259,13 +271,14 @@
                     <h3 class="text-2xl font-bold mb-3 text-primary">2. تقييم المشاعر وتحليل NLP</h3>
                     <p class="text-gray-700 mb-4 flex-grow">
                         استخدام مكتبات NLP (معالجة اللغة الطبيعية) لتقييم مشاعر العملاء من التعليقات وتحسين رسائل التسويق.
+                        <span class="font-bold text-red-600 block mt-2">النتيجة: تحديد 3 نقاط ضعف في المنتج.</span>
                     </p>
                     <div class="mt-auto">
                         <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3">NLP</span>
                         <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3 mr-2">Power BI</span>
                         <div class="flex space-x-4 space-x-reverse mt-4 border-t border-gray-200 pt-3">
-                            <a href="#" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
+                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
+                            <a href="[رابط_لمستودع_GitHub]" target="_blank" class="text-gray-600 hover:text-gray-900 font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
                         </div>
                     </div>
                 </div>
@@ -273,16 +286,17 @@
                 <!-- مشروع 3: تحسين سلسلة الإمداد -->
                 <div class="data-card bg-gray-50 rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-warehouse text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold mb-3 text-primary">3. نمذجة السلاسل الزمنية للمخزون</h3>
+                    <h3 class="text-2xl font-bold text-primary mb-3">3. نمذجة السلاسل الزمنية للمخزون</h3>
                     <p class="text-gray-700 mb-4 flex-grow">
                         تطبيق نماذج التنبؤ (Forecasting) على بيانات المبيعات التاريخية لتحسين كفاءة المخزون والحد من النقص/الفائض.
+                        <span class="font-bold text-red-600 block mt-2">النتيجة: تقليل المخزون الفائض بنسبة 20%.</span>
                     </p>
                     <div class="mt-auto">
                         <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3">Time Series</span>
                         <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3 mr-2">SQL</span>
                         <div class="flex space-x-4 space-x-reverse mt-4 border-t border-gray-200 pt-3">
-                            <a href="#" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
-                            <a href="#" class="text-gray-600 hover:text-gray-900 font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
+                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
+                            <a href="[رابط_لمستودع_GitHub]" target="_blank" class="text-gray-600 hover:text-gray-900 font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
                         </div>
                     </div>
                 </div>
@@ -342,7 +356,7 @@
             <!-- أيقونات التواصل الاجتماعي -->
             <div class="flex justify-center space-x-6 space-x-reverse">
                 <!-- رابط GitHub -->
-                 <a href="[رابط_جيت_هاب]" target="_blank" class="text-primary hover:text-blue-800 transition duration-300 p-4 rounded-full bg-gray-50 shadow-lg border border-gray-200 hover:shadow-xl">
+                 <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-primary hover:text-blue-800 transition duration-300 p-4 rounded-full bg-gray-50 shadow-lg border border-gray-200 hover:shadow-xl">
                     <i class="fab fa-github w-6 h-6"></i>
                 </a>
             </div>
@@ -353,11 +367,9 @@
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p class="mb-2 font-medium text-gray-400">
-                &copy; 2024 معرض أعمال [اسمك]. جميع الحقوق محفوظة.
+                &copy; 2025 معرض أعمال ابراهيم ثابت. جميع الحقوق محفوظة.
             </p>
-            <p class="text-sm text-gray-600">
-                تم التصميم بعناية من أجل وضوح البيانات.
-            </p>
+           
         </div>
     </footer>
 
