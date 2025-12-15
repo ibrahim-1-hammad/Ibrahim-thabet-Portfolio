@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض الأعمال الرقمي - إبراهيم ثابت</title>
+    <title data-i18n="page_title">معرض الأعمال الرقمي - إبراهيم ثابت</title>
     <!-- تحميل Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- تحميل Font Awesome Icons CDN -->
@@ -11,137 +11,283 @@
     
     <style>
         :root {
-            /* لون التركيز الأساسي - أخضر نيون / سماوي (لإضفاء طابع رقمي جذاب) */
-            --primary-color: #00E676; 
-            /* خلفية داكنة للعمق */
-            --bg-dark: #121212; 
-            --card-dark: #1E1E1E;
-            --text-light: #E0E0E0;
+            /* الألوان الافتراضية (الوضع الليلي) */
+            --primary-color: #00AEEF; 
+            --bg-main: #0D1117;       /* خلفية رئيسية */
+            --bg-secondary: #161B22;  /* خلفية الأقسام الثانوية */
+            --bg-card-inner: rgba(29, 34, 42, 0.85); /* خلفية شفافة داكنة */
+            --text-color: #E0E0E0;    /* لون النص */
+            --secondary-data-color: #F39C12; 
         }
+
+        /* الوضع النهاري (Light Mode) */
+        .light-mode {
+            --primary-color: #1E40AF; /* Blue-700 */
+            --bg-main: #FFFFFF;       /* خلفية رئيسية بيضاء نقية */
+            --bg-secondary: #F0F0F0;  /* خلفية الأقسام الثانوية فاتحة (لتباين هادئ) */
+            --bg-card-inner: rgba(255, 255, 255, 0.85); /* خلفية شفافة فاتحة */
+            --text-color: #1F2937;    /* نص داكن جداً */
+            --secondary-data-color: #D97706; 
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-color: var(--bg-main); 
+            color: var(--text-color);
             scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
+            /* إضافة حشوة للهيدر الثابت */
+            padding-top: 70px;
         }
+        
+        /* تطبيق ألوان الخلفيات على الأقسام */
+        #about, #projects, #contact { background-color: var(--bg-main); }
+        #experience, #certifications, #cv { background-color: var(--bg-secondary); }
+
         .text-primary { color: var(--primary-color); }
         .bg-primary { background-color: var(--primary-color); }
+        
+        /* لون روابط التنقل (تحديد اللون في كلا الوضعين) */
+        .nav-link-color { color: #A0AEC0; } 
+        .light-mode .nav-link-color { color: #4B5563; }
+        
+        /* تأثير الأيقونات حسب الوضع */
         .skill-icon {
             font-size: 3rem; 
             margin-bottom: 0.5rem;
             color: var(--primary-color);
-            filter: drop-shadow(0 0 5px rgba(0, 230, 118, 0.5));
+            filter: drop-shadow(0 0 5px rgba(0, 174, 239, 0.3));
         }
+        .light-mode .skill-icon { filter: none; }
         
-        /* تأثير خلفية شبكة البيانات (لإضفاء طابع رقمي) */
-        .data-grid-bg {
-            background-image: linear-gradient(to left, #292929 1px, transparent 1px),
-                              linear-gradient(to bottom, #292929 1px, transparent 1px);
-            background-size: 25px 25px;
+        /* إزالة نمط الخلفية المزعج - الخلفية الآن سادة */
+        .data-grid-bg { background-color: var(--bg-main); box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.4); }
+        .light-mode .data-grid-bg { box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05); }
+
+        /* تصميم الهيدر الثابت بخلفية زجاجية */
+        .header-bg { 
+            background-color: var(--bg-card-inner); /* استخدام الخلفية الشفافة */
+            backdrop-filter: blur(10px); /* تأثير الزجاج */
+            position: fixed; /* تثبيت الهيدر */
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 50; /* تأكد أنه فوق كل شيء */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
+        .footer-bg { background-color: var(--bg-secondary); }
 
         /* ------------------------------------------- */
         /* تحسين تصميم البطاقات وتأثير التمرير عليها */
         /* ------------------------------------------- */
         .data-card {
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); 
+            background-color: var(--bg-card-inner); /* استخدام الخلفية الشفافة للبطاقات */
+            backdrop-filter: blur(8px); /* تأثير الزجاج على البطاقات */
             border-radius: 1rem; 
-            border: 1px solid #333; 
-            background-color: var(--card-dark);
+            /* الوضع الليلي: ظل عميق */
+            border: 1px solid #30363D; 
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7); 
+        }
+        .light-mode .data-card {
+            /* الوضع النهاري: ظل خفيف ونظيف جداً */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+            border-color: #D1D5DB; /* حد خفيف لتمييز البطاقة */
         }
         .data-card:hover {
-            box-shadow: 0 10px 40px rgba(0, 230, 118, 0.3); /* ظل نيون واضح */
+            /* الوضع الليلي: ظل أزرق جذاب */
+            box-shadow: 0 15px 45px rgba(0, 174, 239, 0.4); 
             transform: translateY(-8px); 
             border-color: var(--primary-color); 
         }
-
-        /* تأثير النبض للزر الرئيسي */
-        @keyframes pulse-effect {
-            0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 230, 118, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+        .light-mode .data-card:hover {
+            /* الوضع النهاري: ظل أزرق مؤسسي ناعم */
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.25);
+            transform: translateY(-5px); /* رفع أقل هدوءاً */
         }
-        .pulse-on-load {
-            animation: pulse-effect 2s ease-out infinite;
+        
+        /* ------------------------------------------- */
+        /* تعديل زر السيرة الذاتية (CV Button) وتطبيق التباين */
+        /* ------------------------------------------- */
+        .cv-button-style {
+            transition: all 0.3s;
+            color: white; 
+            background-color: var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         }
-
-        /* حركة مؤشر الرسم البياني (SVG Animation Mock) */
-        @keyframes chart-wave {
-            0% { stroke-dashoffset: 0; }
-            100% { stroke-dashoffset: -100; }
-        }
-        .chart-line {
-            stroke-dasharray: 50;
-            animation: chart-wave 5s linear infinite;
+        .cv-button-style:hover {
+            opacity: 0.9;
         }
 
-        /* تنسيق خاص للعناوين */
-        .neon-heading {
-            text-shadow: 0 0 5px var(--primary-color);
+        /* الوضع النهاري: زر CV يجب أن يكون داكناً للتباين العالي على الخلفية الفاتحة */
+        .light-mode .cv-button-style {
+            background-color: var(--primary-color); 
+            color: white; /* النص يبقى أبيض لضمان الوضوح على الخلفية الزرقاء الداكنة */
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.4);
+        }
+        .light-mode .cv-button-style:hover {
+            background-color: #1A368F; 
+        }
+        /* ------------------------------------------- */
+
+        /* ------------------------------------------- */
+        /* تعديل رابط GitHub قبل الفوتر */
+        /* ------------------------------------------- */
+        .github-link-style {
+            background-color: var(--bg-card-inner);
+            border: 1px solid var(--primary-color);
+            transition: all 0.3s;
+            color: var(--text-color); /* لون النص يتبع وضع الخلفية */
+        }
+        .light-mode .github-link-style {
+            background-color: #FFFFFF;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
+        }
+        .github-link-style:hover {
+            color: var(--primary-color); /* اللون الأساسي عند التمرير */
+            box-shadow: 0 0 15px rgba(0, 174, 239, 0.8);
+            transform: translateY(-2px);
+            background-color: #121212; /* خلفية داكنة خفيفة في الليلي */
+        }
+        .light-mode .github-link-style:hover {
+            color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(30, 64, 175, 0.3);
+            background-color: #F9FAFB; /* خلفية بيضاء خفيفة في النهاري */
+        }
+
+
+        /* خط الكود لعرض الأرقام والنتائج */
+        .font-code {
+            font-family: monospace, sans-serif;
+            color: var(--secondary-data-color); 
+            text-shadow: 0 0 3px rgba(243, 156, 18, 0.5); 
+        }
+        .light-mode .font-code { text-shadow: none; }
+        /* تصحيح عرض البريد الإلكتروني لمنع التشويه */
+        .email-link { word-break: break-all; }
+
+        /* ------------------------------------------- */
+        /* تنسيقات الرسوم البيانية المتحركة (Mock Charts) */
+        /* ------------------------------------------- */
+        .chart-mock { 
+            position: absolute; 
+            opacity: 0.25; /* زيادة الإبراز */
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        
+        /* الرسوم الشريطية */
+        .chart-bar-segment {
+            transform-origin: bottom;
+            animation: bar-height 2s ease-in-out infinite alternate;
+        }
+        @keyframes bar-height { from { transform: scaleY(0.4); } to { transform: scaleY(1.0); } }
+        
+        /* الرسوم الخطية (موجة البيانات) */
+        .chart-line-path { stroke-dasharray: 100; animation: chart-line-flow 8s linear infinite; }
+        @keyframes chart-line-flow { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 100; } }
+
+        /* الرسوم الدائرية (Pie/Donut) */
+        .chart-pie-slice { transform: rotate(-90deg); transform-origin: 50% 50%; animation: pie-slice-animate 4s ease-in-out infinite alternate; }
+        @keyframes pie-slice-animate { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 40; } }
+
+        /* تعديلات محددة على الألوان الداخلية للنص في الوضع النهاري لضمان اللون الداكن */
+        .light-mode h1, .light-mode h2, .light-mode h3, 
+        .light-mode p, .light-mode a, .light-mode span {
+            color: var(--text-color) !important; 
+        }
+        .light-mode .text-primary {
+             color: var(--primary-color) !important; /* إبقاء لون التركيز ساطعا */
+        }
+        .light-mode .text-gray-400, .light-mode .text-gray-300, .light-mode .text-gray-500 {
+            color: var(--text-color) !important; /* ضمان اللون الداكن للنصوص الثانوية */
+        }
+        /* تعديل خاص لنص الرابط في الوضع النهاري ليتبع لون النص العام */
+        .light-mode .data-card a {
+            color: var(--text-color) !important;
+        }
+        /* استثناء: فقط الروابط التي يجب أن تكون بلون التركيز */
+        .light-mode .data-card a.text-primary {
+            color: var(--primary-color) !important;
         }
     </style>
 </head>
 <body class="text-gray-200">
 
     <!-- شريط التنقل (Header) -->
-    <header class="bg-gray-900 shadow-lg sticky top-0 z-10 border-b border-primary/30">
+    <header class="header-bg shadow-lg border-b border-primary/30">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <div class="text-2xl font-extrabold text-primary neon-heading">
+            <div class="text-2xl font-extrabold text-primary" data-i18n="portfolio_name">
                 إبراهيم ثابت | محلل بيانات
             </div>
-            <div class="space-x-6 space-x-reverse hidden md:flex font-medium">
-                <a href="#about" class="text-gray-400 hover:text-primary transition duration-300">من أنا</a>
-                <a href="#experience" class="text-gray-400 hover:text-primary transition duration-300">الخبرة</a>
-                <a href="#skills" class="text-gray-400 hover:text-primary transition duration-300">المهارات</a>
-                <a href="#certifications" class="text-gray-400 hover:text-primary transition duration-300">الشهادات</a>
-                <a href="#projects" class="text-gray-400 hover:text-primary transition duration-300">المشاريع</a>
-                <a href="#cv" class="text-gray-400 hover:text-primary transition duration-300">السيرة الذاتية</a>
-                <a href="#contact" class="text-gray-400 hover:text-primary transition duration-300">تواصل</a>
+            
+            <div class="nav-control-wrapper flex items-center space-x-4 space-x-reverse">
+                
+                <!-- زر تبديل اللغة -->
+                <button id="lang-toggle" class="text-primary hover:text-white transition duration-300 font-bold text-sm px-2 py-1 rounded-full border border-primary">
+                    EN
+                </button>
+
+                <!-- زر الوضع الليلي/النهاري -->
+                <button id="theme-toggle" class="text-primary hover:text-white transition duration-300">
+                    <i class="fas fa-sun text-xl" id="theme-icon"></i>
+                </button>
+                
+                <div class="nav-links-container space-x-6 space-x-reverse hidden md:flex font-medium">
+                    <a href="#about" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_about">من أنا</a>
+                    <a href="#experience" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_experience">الخبرة</a>
+                    <a href="#skills" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_skills">المهارات</a>
+                    <a href="#certifications" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_certs">الشهادات</a>
+                    <a href="#projects" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_projects">المشاريع</a>
+                    <a href="#cv" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_cv">السيرة الذاتية</a>
+                    <a href="#contact" class="nav-link-color hover:text-primary transition duration-300" data-i18n="nav_contact">تواصل</a>
+                </div>
             </div>
         </nav>
     </header>
 
     <!-- القسم الرئيسي والملخص (Hero/About) -->
-    <section id="about" class="relative py-20 md:py-36 bg-gray-900 data-grid-bg overflow-hidden border-b border-primary/30">
-        <!-- مؤشر البيانات المتحرك (Mock Animated Chart) -->
-        <svg class="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <polyline fill="none" stroke="url(#gradient)" stroke-width="1" class="chart-line" 
-                      points="0,80 10,70 20,65 30,55 40,75 50,60 60,70 70,50 80,65 90,45 100,55" />
-            <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="0">
-                <stop offset="0%" stop-color="var(--primary-color)" stop-opacity="0.8" />
-                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.5" />
-            </linearGradient>
+    <section id="about" class="relative py-20 md:py-36 data-grid-bg overflow-hidden border-b border-primary/30">
+        
+        <!-- رسم بياني خطي (Line Chart - Data Flow) - خلف الصورة الشخصية -->
+        <svg class="chart-mock absolute right-1/4 top-1/4 w-1/3 h-2/3 hidden sm:block" viewBox="0 0 100 100" preserveAspectRatio="none" style="transform: rotate(180deg);">
+            <path fill="none" stroke="var(--primary-color)" stroke-width="0.7" stroke-opacity="0.5" class="chart-line-path"
+                  d="M0 80 Q 25 50 50 65 T 100 40" />
+            <!-- Bar Chart Mock - رسم شريطي ثابت كخلفية للخط -->
+            <rect x="10" y="80" width="10" height="15" fill="var(--secondary-data-color)" class="chart-bar-segment" style="animation-delay: 0s;"/>
+            <rect x="30" y="80" width="10" height="30" fill="var(--primary-color)" class="chart-bar-segment" style="animation-delay: 0.5s;"/>
         </svg>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-16 relative z-10">
             
             <!-- النص والملخص -->
             <div class="md:w-3/5 text-center md:text-right">
-                <p class="text-base sm:text-xl font-bold mb-2 text-primary neon-heading">محلل بيانات محترف من الجيزة</p>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-snug mb-6 text-white neon-heading">
+                <p class="text-base sm:text-xl font-bold mb-2 text-primary" data-i18n="hero_subtitle">محلل بيانات محترف من الجيزة</p>
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-snug mb-6 text-white" data-i18n="hero_title">
                     أحوّل الأرقام إلى <span class="text-primary">رؤى استراتيجية</span>.
                 </h1>
                 
-                <div class="bg-card-dark p-6 rounded-xl shadow-xl border border-primary/30">
-                    <p class="text-base sm:text-lg text-gray-300 leading-relaxed">
+                <div class="data-card p-6 rounded-xl shadow-xl border border-primary/30">
+                    <p class="text-base sm:text-lg text-gray-300 leading-relaxed" data-i18n="hero_summary">
                         أمتلك خلفية أكاديمية في **نظم المعلومات التجارية (BIS)** مع تركيز قوي على **التحليل الكمي ونمذجة البيانات**. لدي خبرة عملية في استخدام **Python** و **SQL** لاستخلاص القيمة من مجموعات البيانات المعقدة. حالياً، أكتسب خبرة في تحليل البيانات الأولية كجزء من دوري في <span class="font-bold text-primary">OOH Data</span>، وألتزم بتقديم حلول مستندة إلى البيانات لدفع اتخاذ القرار الاستراتيجي.
                     </p>
                 </div>
 
-                <a href="#projects" class="mt-10 inline-flex items-center justify-center px-10 py-4 border border-transparent text-xl font-bold rounded-lg shadow-2xl bg-primary text-gray-900 hover:bg-green-500 transition duration-300 hero-button pulse-on-load">
+                <a href="#projects" class="mt-10 inline-flex items-center justify-center px-10 py-4 border border-transparent text-xl font-bold rounded-lg shadow-2xl cv-button-style hero-button pulse-on-load" data-i18n="hero_cta">
                     <i class="fas fa-chart-line ml-2"></i> استعراض المشاريع الرئيسية
                 </a>
             </div>
 
             <!-- صورة الملف الشخصي (Professional Display) -->
             <div class="md:w-1/3 flex justify-center">
-                <div class="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-primary/20 transform hover:scale-105 transition duration-500 bg-gray-700">
+                <div class="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-primary/20 transform hover:scale-105 transition duration-500 bg-gray-700 relative z-10">
                     <!-- 
                     *** هام: يرجى استبدال الرابط أدناه برابط صورتك الشخصية الاحترافية (300x300 بكسل على الأقل) ***
                     الرابط الحالي هو صورة وهمية مؤقتة.
                     -->
-                    <img src="https://placehold.co/400x400/00E676/121212?text=صورة+إبراهيم+ثابت" 
+                    <img src="https://placehold.co/400x400/00AEEF/0D1117?text=صورة+إبراهيم+ثابت" 
                          alt="صورة الملف الشخصي الاحترافية لإبراهيم ثابت" 
                          class="w-full h-full object-cover opacity-80">
                 </div>
@@ -153,40 +299,40 @@
     <!-- قسم الخبرة العملية (Work Experience) -->
     <section id="experience" class="py-16 md:py-24 bg-card-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1 neon-heading">الخبرة العملية</h2>
+            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="exp_title">الخبرة العملية</h2>
 
             <div class="max-w-3xl mx-auto space-y-8">
-                <div class="data-card p-6 bg-gray-900">
+                <div class="data-card p-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start mb-2">
                         <div>
-                            <h3 class="text-2xl font-bold text-primary">أخصائي إدخال بيانات ومحلل بيانات مبتدئ</h3>
-                            <p class="text-lg font-semibold text-gray-300">OOH Data</p>
+                            <h3 class="text-2xl font-bold text-primary" data-i18n="exp_role_ooh">أخصائي إدخال بيانات ومحلل بيانات مبتدئ</h3>
+                            <p class="text-lg font-semibold text-gray-300" data-i18n="exp_company_ooh">OOH Data</p>
                         </div>
-                        <span class="text-sm font-medium text-gray-500 bg-gray-700 px-3 py-1 rounded-full whitespace-nowrap mt-2 sm:mt-0">الحالي (حتى مارس 2026)</span>
+                        <span class="text-sm font-medium text-gray-500 bg-gray-700 px-3 py-1 rounded-full whitespace-nowrap mt-2 sm:mt-0" data-i18n="exp_duration_ooh">الحالي (حتى مارس 2026)</span>
                     </div>
-                    <p class="text-gray-400 mb-4 border-t border-gray-700 pt-3">
+                    <p class="text-gray-400 mb-4 border-t border-gray-700 pt-3" data-i18n="exp_desc_ooh_1">
                         دور يجمع بين الدقة في إدخال البيانات الأولية ومسؤوليات تحليلية أساسية. على الرغم من أن الجانب التحليلي محدود حالياً، فقد قمت بـ:
                     </p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-400 marker:text-primary">
+                    <ul class="list-disc list-inside space-y-2 text-gray-400 marker:text-primary" data-i18n-list="exp_desc_ooh_list">
                         <li>تطوير مهارات **تنظيف البيانات** والتحقق من جودتها قبل المعالجة.</li>
                         <li>تطبيق **استعلامات SQL** أساسية لاستخلاص التقارير المطلوبة.</li>
                         <li>العمل بكفاءة في بيئة عمل سريعة الخطى تتطلب دقة عالية في التعامل مع كميات كبيرة من البيانات.</li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-4">
+                    <p class="text-sm text-gray-500 mt-4" data-i18n="exp_focus">
                         <i class="fas fa-money-bill-wave ml-1 text-primary"></i> التركيز على إيجاد فرص لتطبيق مهارات Python لتحسين كفاءة العمليات.
                     </p>
                 </div>
 
                 <!-- مثال لمنصب سابق (يجب ملؤه لاحقاً) -->
-                <div class="data-card p-6 bg-gray-900">
+                <div class="data-card p-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start mb-2">
                         <div>
-                            <h3 class="text-xl font-bold text-primary/80">منصب سابق (إذا وجد)</h3>
-                            <p class="text-md font-semibold text-gray-500">الشركة / المؤسسة السابقة</p>
+                            <h3 class="text-xl font-bold text-primary/80" data-i18n="exp_role_prev">منصب سابق (إذا وجد)</h3>
+                            <p class="text-md font-semibold text-gray-500" data-i18n="exp_company_prev">الشركة / المؤسسة السابقة</p>
                         </div>
-                        <span class="text-sm font-medium text-gray-500 bg-gray-700 px-3 py-1 rounded-full whitespace-nowrap mt-2 sm:mt-0">من 20XX إلى 20XX</span>
+                        <span class="text-sm font-medium text-gray-500 bg-gray-700 px-3 py-1 rounded-full whitespace-nowrap mt-2 sm:mt-0" data-i18n="exp_duration_prev">من 20XX إلى 20XX</span>
                     </div>
-                    <p class="text-gray-600 border-t border-gray-700 pt-3">وصف موجز للمهام والإنجازات الرئيسية. (استبدل هذا النص بخبرتك الفعلية، مع التركيز على النتائج الرقمية).</p>
+                    <p class="text-gray-600 border-t border-gray-700 pt-3" data-i18n="exp_desc_prev">وصف موجز للمهام والإنجازات الرئيسية. (استبدل هذا النص بخبرتك الفعلية، مع التركيز على النتائج الرقمية).</p>
                 </div>
             </div>
         </div>
@@ -195,43 +341,43 @@
     <!-- قسم المهارات (Skills) -->
     <section id="skills" class="py-16 md:py-24 bg-bg-dark data-grid-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1 neon-heading">مجموعة أدوات تحليل البيانات</h2>
+            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="skills_title">مجموعة أدوات تحليل البيانات</h2>
             
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                 
                 <!-- مهارة 1: Python -->
-                <div class="p-6 rounded-xl data-card text-center bg-gray-900">
+                <div class="p-6 rounded-xl data-card text-center">
                     <i class="fab fa-python skill-icon"></i>
-                    <h3 class="text-lg font-semibold text-primary mt-2">Python</h3>
-                    <p class="text-sm text-gray-400">Pandas, NumPy, Scikit-learn</p>
+                    <h3 class="text-lg font-semibold text-primary mt-2" data-i18n="skill_python_title">Python</h3>
+                    <p class="text-sm text-gray-400" data-i18n="skill_python_desc">Pandas, NumPy, Scikit-learn</p>
                 </div>
                 
                 <!-- مهارة 2: SQL -->
-                <div class="p-6 rounded-xl data-card text-center bg-gray-900">
+                <div class="p-6 rounded-xl data-card text-center">
                     <i class="fas fa-database skill-icon"></i>
-                    <h3 class="text-lg font-semibold text-primary mt-2">SQL</h3>
-                    <p class="text-sm text-gray-400">Complex Queries, Optimization</p>
+                    <h3 class="text-lg font-semibold text-primary mt-2" data-i18n="skill_sql_title">SQL</h3>
+                    <p class="text-sm text-gray-400" data-i18n="skill_sql_desc">Complex Queries, Optimization</p>
                 </div>
                 
                 <!-- مهارة 3: Data Visualization -->
-                <div class="p-6 rounded-xl data-card text-center bg-gray-900">
+                <div class="p-6 rounded-xl data-card text-center">
                     <i class="fas fa-chart-pie skill-icon"></i>
-                    <h3 class="text-lg font-semibold text-primary mt-2">التصور</h3>
-                    <p class="text-sm text-gray-400">Tableau, Power BI, Matplotlib</p>
+                    <h3 class="text-lg font-semibold text-primary mt-2" data-i18n="skill_vis_title">التصور</h3>
+                    <p class="text-sm text-gray-400" data-i18n="skill_vis_desc">Tableau, Power BI, Matplotlib</p>
                 </div>
 
                 <!-- مهارة 4: Machine Learning -->
-                <div class="p-6 rounded-xl data-card text-center bg-gray-900">
+                <div class="p-6 rounded-xl data-card text-center">
                     <i class="fas fa-robot skill-icon"></i>
-                    <h3 class="text-lg font-semibold text-primary mt-2">النمذجة</h3>
-                    <p class="text-sm text-gray-400">Classification, Time Series</p>
+                    <h3 class="text-lg font-semibold text-primary mt-2" data-i18n="skill_ml_title">النمذجة</h3>
+                    <p class="text-sm text-gray-400" data-i18n="skill_ml_desc">Classification, Time Series</p>
                 </div>
 
                  <!-- مهارة 5: ETL/Cloud -->
-                <div class="p-6 rounded-xl data-card text-center bg-gray-900">
+                <div class="p-6 rounded-xl data-card text-center">
                     <i class="fas fa-cloud-arrow-up skill-icon"></i>
-                    <h3 class="text-lg font-semibold text-primary mt-2">معالجة البيانات</h3>
-                    <p class="text-sm text-gray-400">ETL Pipelines, Data Wrangling</p>
+                    <h3 class="text-lg font-semibold text-primary mt-2" data-i18n="skill_etl_title">معالجة البيانات</h3>
+                    <p class="text-sm text-gray-400" data-i18n="skill_etl_desc">ETL Pipelines, Data Wrangling</p>
                 </div>
                 
             </div>
@@ -239,99 +385,121 @@
     </section>
     
     <!-- قسم الشهادات والتعليم (Certifications) -->
-    <section id="certifications" class="py-16 md:py-24 bg-card-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-12 text-white border-b-4 border-primary inline-block pb-1 neon-heading">التعليم والشهادات</h2>
+    <section id="certifications" class="relative py-16 md:py-24 bg-card-dark">
+        <!-- رسم بياني دائري متحرك (Mock Pie Chart) - يمثل توزيع المعرفة -->
+        <div class="chart-mock top-10 right-0 w-1/4 h-1/4 hidden md:block">
+            <svg viewBox="0 0 100 100" class="w-full h-full opacity-30">
+                <circle cx="50" cy="50" r="40" fill="#2C3E50" stroke="#30363D" stroke-width="2"/>
+                <!-- شريحة متحركة (المهارات الأساسية) -->
+                <circle cx="50" cy="50" r="30" fill="transparent" stroke="var(--primary-color)" stroke-width="20" style="stroke-dasharray: 100; stroke-dashoffset: 20;" class="chart-pie-slice"/>
+                <!-- شريحة ثابتة (المعرفة العامة) -->
+                <circle cx="50" cy="50" r="30" fill="transparent" stroke="var(--secondary-data-color)" stroke-width="20" style="stroke-dasharray: 100; stroke-dashoffset: 60; transform: rotate(-90deg); transform-origin: 50% 50%;"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="certs_title">التعليم والشهادات</h2>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 
                 <!-- شهادة 1: مسار تحليل البيانات الأساسي -->
-                <div class="data-card bg-gray-900 p-6">
+                <div class="data-card p-6">
                     <i class="fas fa-graduation-cap skill-icon text-4xl mb-3"></i>
-                    <h3 class="text-xl font-bold text-primary mb-2">شهادة تحليل البيانات المتقدم</h3>
-                    <p class="text-gray-400">منصة [اسم المنصة - Coursera/Udemy/Udacity]</p>
-                    <p class="text-sm text-gray-500 mt-2">تغطية شاملة لـ SQL، Python (Pandas)، والإحصاء.</p>
+                    <h3 class="text-xl font-bold text-primary mb-2" data-i18n="cert_1_title">شهادة تحليل البيانات المتقدم</h3>
+                    <p class="text-gray-400" data-i18n="cert_1_platform">منصة [اسم المنصة - Coursera/Udemy/Udacity]</p>
+                    <p class="text-sm text-gray-500 mt-2" data-i18n="cert_1_desc">تغطية شاملة لـ SQL، Python (Pandas)، والإحصاء.</p>
                 </div>
 
                 <!-- شهادة 2: إتقان Python للتحليل -->
-                <div class="data-card bg-gray-900 p-6">
+                <div class="data-card p-6">
                     <i class="fab fa-python skill-icon text-4xl mb-3"></i>
-                    <h3 class="text-xl font-bold text-primary mb-2">إتقان Python للتحليل الإحصائي</h3>
-                    <p class="text-gray-400">مؤسسة [اسم المؤسسة التعليمية]</p>
-                    <p class="text-sm text-gray-500 mt-2">التركيز على Scikit-learn والتعامل مع السلاسل الزمنية.</p>
+                    <h3 class="text-xl font-bold text-primary mb-2" data-i18n="cert_2_title">إتقان Python للتحليل الإحصائي</h3>
+                    <p class="text-gray-400" data-i18n="cert_2_platform">مؤسسة [اسم المؤسسة التعليمية]</p>
+                    <p class="text-sm text-gray-500 mt-2" data-i18n="cert_2_desc">التركيز على Scikit-learn والتعامل مع السلاسل الزمنية.</p>
                 </div>
 
                 <!-- شهادة 3: تصور البيانات (Tableau/Power BI) -->
-                <div class="data-card bg-gray-900 p-6">
+                <div class="data-card p-6">
                     <i class="fas fa-chart-bar skill-icon text-4xl mb-3"></i>
-                    <h3 class="text-xl font-bold text-primary mb-2">تصميم لوحات معلومات احترافية</h3>
-                    <p class="text-gray-400">Tableau Specialist / Power BI Expert</p>
-                    <p class="text-sm text-gray-500 mt-2">تحويل البيانات المعقدة إلى قصص مرئية بسيطة.</p>
+                    <h3 class="text-xl font-bold text-primary mb-2" data-i18n="cert_3_title">تصميم لوحات معلومات احترافية</h3>
+                    <p class="text-gray-400" data-i18n="cert_3_platform">Tableau Specialist / Power BI Expert</p>
+                    <p class="text-sm text-gray-500 mt-2" data-i18n="cert_3_desc">تحويل البيانات المعقدة إلى قصص مرئية بسيطة.</p>
                 </div>
             </div>
-            <p class="mt-8 text-gray-400">
+            <p class="mt-8 text-gray-400" data-i18n="certs_commitment">
                 أنا ملتزم بالتعلم المستمر ومتابعة أحدث التقنيات في مجال تحليل البيانات والذكاء الاصطناعي.
             </p>
         </div>
     </section>
 
     <!-- قسم المشاريع (Projects) -->
-    <section id="projects" class="py-16 md:py-24 bg-bg-dark data-grid-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1 neon-heading">دراسات حالة وتحليل مشاريع</h2>
+    <section id="projects" class="relative py-16 md:py-24 bg-bg-dark data-grid-bg">
+        <!-- رسم بياني شريطي متحرك (Bar Chart) - يمثل نمو الأداء -->
+        <div class="chart-mock bottom-0 left-0 w-1/3 h-1/2 hidden sm:block">
+             <svg viewBox="0 0 100 100" class="w-full h-full opacity-20">
+                <!-- Bar Chart Segments -->
+                <rect x="5" y="80" width="10" height="15" fill="var(--primary-color)" class="chart-bar-segment" style="animation-delay: 0s;"/>
+                <rect x="25" y="80" width="10" height="30" fill="var(--secondary-data-color)" class="chart-bar-segment" style="animation-delay: 0.2s;"/>
+                <rect x="45" y="80" width="10" height="45" fill="var(--primary-color)" class="chart-bar-segment" style="animation-delay: 0.4s;"/>
+                <rect x="65" y="80" width="10" height="25" fill="var(--secondary-data-color)" class="chart-bar-segment" style="animation-delay: 0.6s;"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="projects_title">دراسات حالة وتحليل مشاريع</h2>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- مشروع 1: تحليل سلوك العملاء -->
-                <div class="data-card bg-gray-900 rounded-xl shadow-lg p-6 flex flex-col h-full">
+                <div class="data-card rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-users-viewfinder text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold mb-3 text-primary">1. تقسيم العملاء ونموذج الانقطاع</h3>
-                    <p class="text-gray-400 mb-4 flex-grow">
+                    <h3 class="text-2xl font-bold mb-3 text-primary" data-i18n="proj_1_title">1. تقسيم العملاء ونموذج الانقطاع</h3>
+                    <p class="text-gray-400 mb-4 flex-grow" data-i18n="proj_1_desc">
                         تحليل RFM متقدم لتحديد شرائح العملاء الاستراتيجية وتطوير نماذج التنبؤ بخطر التوقف عن الشراء (Churn).
-                        <span class="font-bold text-red-400 block mt-2">النتيجة: رفع معدل الاحتفاظ بالعملاء بنسبة 15%.</span>
+                        <span class="font-bold font-code block mt-2" data-i18n="proj_1_result">النتيجة: رفع معدل الاحتفاظ بالعملاء بـ 15%.</span>
                     </p>
                     <div class="mt-auto">
                         <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3">Python</span>
                         <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3 mr-2">Machine Learning</span>
                         <div class="flex space-x-4 space-x-reverse mt-4 border-t border-gray-700 pt-3">
-                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
-                            <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-gray-400 hover:text-white font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
+                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center" data-i18n="link_view_study"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
+                            <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-gray-400 hover:text-white font-medium flex items-center" data-i18n="link_view_code"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- مشروع 2: تحليل وسائل التواصل الاجتماعي -->
-                <div class="data-card bg-gray-900 rounded-xl shadow-lg p-6 flex flex-col h-full">
+                <div class="data-card rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-microchip text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold mb-3 text-primary">2. تقييم المشاعر وتحليل NLP</h3>
-                    <p class="text-gray-400 mb-4 flex-grow">
+                    <h3 class="text-2xl font-bold mb-3 text-primary" data-i18n="proj_2_title">2. تقييم المشاعر وتحليل NLP</h3>
+                    <p class="text-gray-400 mb-4 flex-grow" data-i18n="proj_2_desc">
                         استخدام مكتبات NLP (معالجة اللغة الطبيعية) لتقييم مشاعر العملاء من التعليقات وتحسين رسائل التسويق.
-                        <span class="font-bold text-red-400 block mt-2">النتيجة: تحديد 3 نقاط ضعف في المنتج.</span>
+                        <span class="font-bold font-code block mt-2" data-i18n="proj_2_result">النتيجة: تحديد 3 نقاط ضعف في المنتج.</span>
                     </p>
                     <div class="mt-auto">
                         <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3">NLP</span>
                         <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3 mr-2">Power BI</span>
                         <div class="flex space-x-4 space-x-reverse mt-4 border-t border-gray-700 pt-3">
-                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
-                            <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-gray-400 hover:text-white font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
+                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center" data-i18n="link_view_study"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
+                            <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-gray-400 hover:text-white font-medium flex items-center" data-i18n="link_view_code"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- مشروع 3: تحسين سلسلة الإمداد -->
-                <div class="data-card bg-gray-900 rounded-xl shadow-lg p-6 flex flex-col h-full">
+                <div class="data-card rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-warehouse text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold text-primary mb-3">3. نمذجة السلاسل الزمنية للمخزون</h3>
-                    <p class="text-gray-400 mb-4 flex-grow">
+                    <h3 class="text-2xl font-bold mb-3 text-primary" data-i18n="proj_3_title">3. نمذجة السلاسل الزمنية للمخزون</h3>
+                    <p class="text-gray-400 mb-4 flex-grow" data-i18n="proj_3_desc">
                         تطبيق نماذج التنبؤ (Forecasting) على بيانات المبيعات التاريخية لتحسين كفاءة المخزون والحد من النقص/الفائض.
-                        <span class="font-bold text-red-400 block mt-2">النتيجة: تقليل المخزون الفائض بنسبة 20%.</span>
+                        <span class="font-bold font-code block mt-2" data-i18n="proj_3_result">النتيجة: تقليل المخزون الفائض بـ 20%.</span>
                     </p>
                     <div class="mt-auto">
                         <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3">Time Series</span>
                         <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-full mb-3 mr-2">SQL</span>
                         <div class="flex space-x-4 space-x-reverse mt-4 border-t border-gray-700 pt-3">
-                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
-                            <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-gray-400 hover:text-white font-medium flex items-center"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
+                            <a href="[رابط_لتقرير_مفصل_أو_Dashboard]" target="_blank" class="text-primary hover:underline font-medium flex items-center" data-i18n="link_view_study"><i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة</a>
+                            <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-gray-400 hover:text-white font-medium flex items-center" data-i18n="link_view_code"><i class="fab fa-github ml-1 text-sm"></i> كود المشروع</a>
                         </div>
                     </div>
                 </div>
@@ -342,11 +510,11 @@
     <!-- قسم السيرة الذاتية (CV) -->
     <section id="cv" class="py-16 bg-card-dark">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-6 text-white border-b-4 border-primary inline-block pb-1 neon-heading">السيرة الذاتية (CV)</h2>
-            <p class="text-xl text-gray-400 mb-8">
+            <h2 class="text-4xl font-bold mb-6 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="cv_title">السيرة الذاتية (CV)</h2>
+            <p class="text-xl text-gray-400 mb-8" data-i18n="cv_desc">
                 للاطلاع على مسيرتي الأكاديمية والمهنية بالتفصيل، يمكنك تحميل نسختي المحدثة.
             </p>
-            <a href="https://drive.google.com/file/d/16KXDtPqKRq61fJEJazxs6Nr5gqg-1AKt/view?usp=drive_link" target="_blank" class="inline-flex items-center justify-center px-8 py-4 text-xl font-bold rounded-lg text-gray-900 bg-primary hover:bg-green-500 transition duration-300 shadow-xl hero-button">
+            <a href="https://drive.google.com/file/d/16KXDtPqKRq61fJEJazxs6Nr5gqg-1AKt/view?usp=drive_link" target="_blank" class="inline-flex items-center justify-center px-8 py-4 text-xl font-bold rounded-lg shadow-xl hero-button cv-button-style" data-i18n="cv_cta">
                 <i class="fas fa-cloud-arrow-down ml-3"></i> تحميل السيرة الذاتية (PDF)
             </a>
         </div>
@@ -356,43 +524,43 @@
     <!-- قسم التواصل (Contact) -->
     <section id="contact" class="py-16 md:py-24 bg-bg-dark data-grid-bg">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-8 text-white border-b-4 border-primary inline-block pb-1 neon-heading">تواصل معي</h2>
-            <p class="text-xl text-gray-400 mb-10">
+            <h2 class="text-4xl font-bold mb-8 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="contact_title">تواصل معي</h2>
+            <p class="text-xl text-gray-400 mb-10" data-i18n="contact_desc">
                 أنا متاح لمناقشة فرص العمل، الاستشارات التحليلية، أو التعاون في مشاريع تحليل البيانات.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
                 <!-- البريد الإلكتروني -->
-                <div class="p-6 bg-gray-900 rounded-xl data-card">
+                <div class="p-6 rounded-xl data-card">
                     <i class="fas fa-envelope text-4xl text-primary mb-3"></i>
-                    <p class="font-semibold text-lg text-primary">البريد الإلكتروني</p>
-                    <a href="mailto:ibrahim.hammad.career@gmail.com" class="text-gray-300 hover:underline">ibrahim.hammad.career@gmail.com</a>
+                    <p class="font-semibold text-lg text-primary" data-i18n="contact_email_title">البريد الإلكتروني</p>
+                    <a href="mailto:ibrahim.hammad.career@gmail.com" class="text-gray-300 hover:underline email-link">ibrahim.hammad.career@gmail.com</a>
                 </div>
                 
                 <!-- الهاتف -->
-                <div class="p-6 bg-gray-900 rounded-xl data-card">
+                <div class="p-6 rounded-xl data-card">
                     <i class="fas fa-phone-alt text-4xl text-primary mb-3"></i>
-                    <p class="font-semibold text-lg text-primary">الهاتف</p>
+                    <p class="font-semibold text-lg text-primary" data-i18n="contact_phone_title">الهاتف</p>
                     <a href="tel:+201551137192" class="text-gray-300 hover:underline">+201551137192</a>
                 </div>
 
                 <!-- لينكد إن -->
-                <div class="p-6 bg-gray-900 rounded-xl data-card">
+                <div class="p-6 rounded-xl data-card">
                     <i class="fab fa-linkedin-in text-4xl text-primary mb-3"></i>
-                    <p class="font-semibold text-lg text-primary">LinkedIn</p>
+                    <p class="font-semibold text-lg text-primary" data-i18n="contact_linkedin_title">LinkedIn</p>
                     <!-- ملاحظة: يرجى استبدال رابط GitHub برابط ملفك الشخصي على LinkedIn. -->
-                    <a href="[رابط_لينكد_إن_هنا]" target="_blank" class="text-gray-300 hover:underline">ملفي الشخصي</a>
+                    <a href="[رابط_لينكد_إن_هنا]" target="_blank" class="text-gray-300 hover:underline" data-i18n="contact_linkedin_link">ملفي الشخصي</a>
                 </div>
             </div>
 
-            <p class="text-xl text-gray-400 mb-8 font-bold">
+            <p class="text-xl text-gray-400 mb-8 font-bold" data-i18n="contact_code_platforms">
                 تجدني أيضاً على منصات الكود:
             </p>
 
             <!-- أيقونات التواصل الاجتماعي -->
             <div class="flex justify-center space-x-6 space-x-reverse">
                 <!-- رابط GitHub -->
-                 <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-primary hover:text-white transition duration-300 p-4 rounded-full bg-gray-900 shadow-lg border border-primary/30 hover:shadow-[0_0_20px_rgba(0,230,118,0.5)]">
+                 <a href="https://github.com/ibrahim-1-hammad" target="_blank" class="text-primary hover:text-white transition duration-300 p-4 rounded-full shadow-lg github-link-style">
                     <i class="fab fa-github w-6 h-6"></i>
                 </a>
             </div>
@@ -400,9 +568,9 @@
     </section>
 
     <!-- تذييل الصفحة (Footer) -->
-    <footer class="bg-gray-950 text-white py-8">
+    <footer class="footer-bg text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="mb-2 font-medium text-gray-500">
+            <p class="mb-2 font-medium text-gray-500" data-i18n="footer_copyright">
                 &copy; 2025 معرض أعمال إبراهيم ثابت. جميع الحقوق محفوظة.
             </p>
            
@@ -410,4 +578,210 @@
     </footer>
 
 </body>
-</html>
+
+<script>
+    // -------------------------------------------
+    // 1. منطق تبديل الوضع (Theme Toggling Logic)
+    // -------------------------------------------
+    
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const root = document.documentElement;
+
+    // حالة الوضع الافتراضية (داكن)
+    let isDarkMode = true;
+
+    // دالة لتطبيق الوضع
+    function applyTheme(isDark) {
+        if (isDark) {
+            root.classList.remove('light-mode');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            root.classList.add('light-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+        isDarkMode = isDark;
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    // تحميل الوضع المحفوظ أو الافتراضي
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        applyTheme(false);
+    } else {
+        applyTheme(true);
+    }
+
+    // الاستماع لزر تبديل الوضع
+    themeToggle.addEventListener('click', () => {
+        applyTheme(!isDarkMode);
+    });
+
+    // -------------------------------------------
+    // 2. منطق تبديل اللغة (Language Translation Logic)
+    // -------------------------------------------
+
+    const langToggle = document.getElementById('lang-toggle');
+    let currentLang = localStorage.getItem('lang') || 'ar'; // اللغة الافتراضية العربية
+
+    const translations = {
+        'page_title': { ar: 'معرض الأعمال الرقمي - إبراهيم ثابت', en: 'Ibrahim Thabet - Data Analyst Portfolio' },
+        'portfolio_name': { ar: 'إبراهيم ثابت | محلل بيانات', en: 'Ibrahim Thabet | Data Analyst' },
+        'nav_about': { ar: 'من أنا', en: 'About Me' },
+        'nav_experience': { ar: 'الخبرة', en: 'Experience' },
+        'nav_skills': { ar: 'المهارات', en: 'Skills' },
+        'nav_certs': { ar: 'الشهادات', en: 'Certifications' },
+        'nav_projects': { ar: 'المشاريع', en: 'Projects' },
+        'nav_cv': { ar: 'السيرة الذاتية', en: 'CV' },
+        'nav_contact': { ar: 'تواصل', en: 'Contact' },
+        
+        'hero_subtitle': { ar: 'محلل بيانات محترف من الجيزة', en: 'Professional Data Analyst from Giza' },
+        'hero_title': { ar: 'أحوّل الأرقام إلى <span class="text-primary">رؤى استراتيجية</span>.', en: 'I transform numbers into <span class="text-primary">Strategic Insights</span>.' },
+        'hero_summary': { ar: 'أمتلك خلفية أكاديمية في **نظم المعلومات التجارية (BIS)** مع تركيز قوي على **التحليل الكمي ونمذجة البيانات**. لدي خبرة عملية في استخدام **Python** و **SQL** لاستخلاص القيمة من مجموعات البيانات المعقدة. حالياً، أكتسب خبرة في تحليل البيانات الأولية كجزء من دوري في <span class="font-bold text-primary">OOH Data</span>، وألتزم بتقديم حلول مستندة إلى البيانات لدفع اتخاذ القرار الاستراتيجي.', en: 'I hold an academic background in **Business Information Systems (BIS)** with a strong focus on **quantitative analysis and data modeling**. I have practical experience using **Python** and **SQL** to extract value from complex datasets. Currently, I gain practical experience in data processing as part of my role at <span class="font-bold text-primary">OOH Data</span>, committed to delivering data-driven strategic solutions.' },
+        'hero_cta': { ar: '<i class="fas fa-chart-line ml-2"></i> استعراض المشاريع الرئيسية', en: '<i class="fas fa-chart-line mr-2"></i> View Key Projects' },
+        
+        'exp_title': { ar: 'الخبرة العملية', en: 'Work Experience' },
+        'exp_role_ooh': { ar: 'أخصائي إدخال بيانات ومحلل بيانات مبتدئ', en: 'Data Entry Specialist & Junior Analyst' },
+        'exp_company_ooh': { ar: 'OOH Data', en: 'OOH Data' },
+        'exp_duration_ooh': { ar: 'الحالي (حتى مارس 2026)', en: 'Current (until March 2026)' },
+        'exp_desc_ooh_1': { ar: 'دور يجمع بين الدقة في إدخال البيانات الأولية ومسؤوليات تحليلية أساسية. على الرغم من أن الجانب التحليلي محدود حالياً، فقد قمت بـ:', en: 'A role combining precise data entry with essential analytical responsibilities. Although the analytical aspect is currently limited, I have:' },
+        'exp_desc_ooh_list_0': { ar: 'تطوير مهارات **تنظيف البيانات** والتحقق من جودتها قبل المعالجة.', en: 'Developed **data cleaning** and quality assurance skills prior to processing.' },
+        'exp_desc_ooh_list_1': { ar: 'تطبيق **استعلامات SQL** أساسية لاستخلاص التقارير المطلوبة.', en: 'Applied basic **SQL queries** to extract required reports.' },
+        'exp_desc_ooh_list_2': { ar: 'العمل بكفاءة في بيئة عمل سريعة الخطى تتطلب دقة عالية في التعامل مع كميات كبيرة من البيانات.', en: 'Worked efficiently in a fast-paced environment requiring high accuracy in handling large volumes of data.' },
+        'exp_focus': { ar: '<i class="fas fa-money-bill-wave ml-1 text-primary"></i> التركيز على إيجاد فرص لتطبيق مهارات Python لتحسين كفاءة العمليات.', en: '<i class="fas fa-money-bill-wave mr-1 text-primary"></i> Focusing on finding opportunities to apply Python skills for efficiency improvements.' },
+        'exp_role_prev': { ar: 'منصب سابق (إذا وجد)', en: 'Previous Role (If applicable)' },
+        'exp_company_prev': { ar: 'الشركة / المؤسسة السابقة', en: 'Previous Company / Institution' },
+        'exp_duration_prev': { ar: 'من 20XX إلى 20XX', en: 'From 20XX to 20XX' },
+        'exp_desc_prev': { ar: 'وصف موجز للمهام والإنجازات الرئيسية. (استبدل هذا النص بخبرتك الفعلية، مع التركيز على النتائج الرقمية).', en: 'Brief description of key responsibilities and achievements. (Replace this text with your actual experience, focusing on quantifiable results).' },
+
+        'skills_title': { ar: 'مجموعة أدوات تحليل البيانات', en: 'Data Analysis Toolkit' },
+        'skill_python_title': { ar: 'Python', en: 'Python' },
+        'skill_python_desc': { ar: 'Pandas, NumPy, Scikit-learn', en: 'Pandas, NumPy, Scikit-learn' },
+        'skill_sql_title': { ar: 'SQL', en: 'SQL' },
+        'skill_sql_desc': { ar: 'Complex Queries, Optimization', en: 'Complex Queries, Optimization' },
+        'skill_vis_title': { ar: 'التصور', en: 'Visualization' },
+        'skill_vis_desc': { ar: 'Tableau, Power BI, Matplotlib', en: 'Tableau, Power BI, Matplotlib' },
+        'skill_ml_title': { ar: 'النمذجة', en: 'Modeling' },
+        'skill_ml_desc': { ar: 'Classification, Time Series', en: 'Classification, Time Series' },
+        'skill_etl_title': { ar: 'معالجة البيانات', en: 'Data Processing' },
+        'skill_etl_desc': { ar: 'ETL Pipelines, Data Wrangling', en: 'ETL Pipelines, Data Wrangling' },
+
+        'certs_title': { ar: 'التعليم والشهادات', en: 'Education & Certifications' },
+        'cert_1_title': { ar: 'شهادة تحليل البيانات المتقدم', en: 'Advanced Data Analysis Certificate' },
+        'cert_1_platform': { ar: 'منصة [اسم المنصة - Coursera/Udemy/Udacity]', en: '[Platform Name - Coursera/Udemy/Udacity]' },
+        'cert_1_desc': { ar: 'تغطية شاملة لـ SQL، Python (Pandas)، والإحصاء.', en: 'Comprehensive coverage of SQL, Python (Pandas), and statistics.' },
+        'cert_2_title': { ar: 'إتقان Python للتحليل الإحصائي', en: 'Mastering Python for Statistical Analysis' },
+        'cert_2_platform': { ar: 'مؤسسة [اسم المؤسسة التعليمية]', en: '[Educational Institution]' },
+        'cert_2_desc': { ar: 'التركيز على Scikit-learn والتعامل مع السلاسل الزمنية.', en: 'Focus on Scikit-learn and time series handling.' },
+        'cert_3_title': { ar: 'تصميم لوحات معلومات احترافية', en: 'Professional Dashboard Design' },
+        'cert_3_platform': { ar: 'Tableau Specialist / Power BI Expert', en: 'Tableau Specialist / Power BI Expert' },
+        'cert_3_desc': { ar: 'تحويل البيانات المعقدة إلى قصص مرئية بسيطة.', en: 'Transforming complex data into simple visual stories.' },
+        'certs_commitment': { ar: 'أنا ملتزم بالتعلم المستمر ومتابعة أحدث التقنيات في مجال تحليل البيانات والذكاء الاصطناعي.', en: 'I am committed to continuous learning and keeping up with the latest technologies in data analysis and AI.' },
+        
+        'projects_title': { ar: 'دراسات حالة وتحليل مشاريع', en: 'Case Studies and Project Analysis' },
+        'proj_1_title': { ar: '1. تقسيم العملاء ونموذج الانقطاع', en: '1. Customer Segmentation and Churn Model' },
+        'proj_1_desc': { ar: 'تحليل RFM متقدم لتحديد شرائح العملاء الاستراتيجية وتطوير نماذج التنبؤ بخطر التوقف عن الشراء (Churn).', en: 'Advanced RFM analysis to identify strategic customer segments and develop predictive models for churn risk.' },
+        'proj_1_result': { ar: 'النتيجة: رفع معدل الاحتفاظ بالعملاء بـ 15%.', en: 'Result: Increased customer retention rate by 15%.' },
+        'proj_2_title': { ar: '2. تقييم المشاعر وتحليل NLP', en: '2. Sentiment Analysis and NLP' },
+        'proj_2_desc': { ar: 'استخدام مكتبات NLP (معالجة اللغة الطبيعية) لتقييم مشاعر العملاء من التعليقات وتحسين رسائل التسويق.', en: 'Utilized NLP libraries to assess customer sentiment from comments and optimize marketing messages.' },
+        'proj_2_result': { ar: 'النتيجة: تحديد 3 نقاط ضعف في المنتج.', en: 'Result: Identified 3 key product weaknesses.' },
+        'proj_3_title': { ar: '3. نمذجة السلاسل الزمنية للمخزون', en: '3. Inventory Time Series Modeling' },
+        'proj_3_desc': { ar: 'تطبيق نماذج التنبؤ (Forecasting) على بيانات المبيعات التاريخية لتحسين كفاءة المخزون والحد من النقص/الفائض.', en: 'Applied forecasting models to historical sales data to improve inventory efficiency and reduce shortages/surpluses.' },
+        'proj_3_result': { ar: 'النتيجة: تقليل المخزون الفائض بـ 20%.', en: 'Result: Reduced excess inventory by 20%.' },
+        
+        'link_view_study': { ar: '<i class="fas fa-file-alt ml-1 text-sm"></i> عرض الدراسة', en: '<i class="fas fa-file-alt mr-1 text-sm"></i> View Study' },
+        'link_view_code': { ar: '<i class="fab fa-github ml-1 text-sm"></i> كود المشروع', en: '<i class="fas fa-file-code mr-1 text-sm"></i> View Code' },
+
+        'cv_title': { ar: 'السيرة الذاتية (CV)', en: 'Curriculum Vitae (CV)' },
+        'cv_desc': { ar: 'للاطلاع على مسيرتي الأكاديمية والمهنية بالتفصيل، يمكنك تحميل نسختي المحدثة.', en: 'For detailed view of my academic and professional career, please download my updated CV.' },
+        'cv_cta': { ar: '<i class="fas fa-cloud-arrow-down ml-3"></i> تحميل السيرة الذاتية (PDF)', en: '<i class="fas fa-cloud-arrow-down mr-3"></i> Download CV (PDF)' },
+
+        'contact_title': { ar: 'تواصل معي', en: 'Contact Me' },
+        'contact_desc': { ar: 'أنا متاح لمناقشة فرص العمل، الاستشارات التحليلية، أو التعاون في مشاريع تحليل البيانات.', en: 'I am available to discuss job opportunities, analytical consulting, or collaboration on data analysis projects.' },
+        'contact_email_title': { ar: 'البريد الإلكتروني', en: 'Email' },
+        'contact_phone_title': { ar: 'الهاتف', en: 'Phone' },
+        'contact_linkedin_title': { ar: 'LinkedIn', en: 'LinkedIn' },
+        'contact_linkedin_link': { ar: 'ملفي الشخصي', en: 'My Profile' },
+        'contact_code_platforms': { ar: 'تجدني أيضاً على منصات الكود:', en: 'You can also find me on coding platforms:' },
+        
+        'footer_copyright': { ar: '&copy; 2025 معرض أعمال إبراهيم ثابت. جميع الحقوق محفوظة.', en: '&copy; 2025 Ibrahim Thabet Portfolio. All Rights Reserved.' }
+    };
+
+    function translatePage(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (translations[key] && translations[key][lang]) {
+                element.innerHTML = translations[key][lang];
+            }
+        });
+        
+        // Handle list elements that need translation
+        document.querySelectorAll('[data-i18n-list]').forEach(ul => {
+            const listKey = ul.getAttribute('data-i18n-list');
+            ul.innerHTML = ''; // Clear existing list items
+            for (let i = 0; ; i++) {
+                const itemKey = `${listKey}_${i}`;
+                if (translations[itemKey] && translations[itemKey][lang]) {
+                    const li = document.createElement('li');
+                    li.innerHTML = translations[itemKey][lang];
+                    ul.appendChild(li);
+                } else {
+                    break;
+                }
+            }
+        });
+
+        // Set direction and language attribute
+        const html = document.documentElement;
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+        // Adjust spacing and direction for the control wrapper and navigation links
+        const controlWrapper = document.querySelector('.nav-control-wrapper');
+        const navLinks = document.querySelector('.nav-links-container');
+
+        if (controlWrapper) {
+            // Adjust outer wrapper spacing/direction
+            if (lang === 'ar') {
+                controlWrapper.classList.add('space-x-reverse');
+                // Ensure the reverse class is removed for LTR, which happens in the 'else' block
+            } else {
+                controlWrapper.classList.remove('space-x-reverse');
+            }
+        }
+        
+        if (navLinks) {
+            // Adjust links container spacing/direction
+            if (lang === 'ar') {
+                navLinks.classList.add('space-x-reverse');
+                navLinks.classList.remove('space-x-6');
+                navLinks.classList.add('space-x-4'); // Reduced spacing for RTL to prevent wrap
+            } else {
+                navLinks.classList.remove('space-x-reverse');
+                navLinks.classList.remove('space-x-4'); // Restore standard spacing for LTR
+                navLinks.classList.add('space-x-6');
+            }
+        }
+        
+        // Update language toggle text
+        langToggle.textContent = lang === 'ar' ? 'EN' : 'عربي';
+        localStorage.setItem('lang', lang);
+        currentLang = lang;
+    }
+
+    // 3. تطبيق اللغة الافتراضية عند التحميل
+    translatePage(currentLang);
+
+    // الاستماع لزر تبديل اللغة
+    themeToggle.addEventListener('click', () => {
+        applyTheme(!isDarkMode);
+    });
+
+</script>
+<!-- CSS Animation for the Line Chart in Hero Section -->
+<style>
+@keyframes chart-line-flow {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 100; }
+}
+</style>
