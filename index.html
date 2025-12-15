@@ -16,8 +16,8 @@
             --bg-main: #0D1117;       /* خلفية رئيسية */
             --bg-secondary: #161B22;  /* خلفية الأقسام الثانوية */
             --bg-card-inner: rgba(29, 34, 42, 0.85); /* خلفية شفافة داكنة */
-            --text-color: #E0E0E0;    /* لون النص الأساسي */
-            --text-secondary: #A0AEC0; /* لون النص الثانوي (للتحديد في الوضع الليلي) */
+            --text-color-main: #E0E0E0;    /* لون النص الأساسي (فاتح) */
+            --text-color-secondary: #A0AEC0; /* لون النص الثانوي (للتحديد في الوضع الليلي) */
             --secondary-data-color: #F39C12; 
         }
 
@@ -27,18 +27,17 @@
             --bg-main: #FFFFFF;       /* خلفية رئيسية بيضاء نقية */
             --bg-secondary: #F0F0F0;  /* خلفية الأقسام الثانوية فاتحة (لتباين هادئ) */
             --bg-card-inner: rgba(255, 255, 255, 0.9); /* خلفية شفافة فاتحة */
-            --text-color: #1F2937;    /* نص داكن جداً */
-            --text-secondary: #4B5563; /* لون النص الثانوي (للتحديد في الوضع النهاري) */
+            --text-color-main: #1F2937;    /* نص داكن جداً */
+            --text-color-secondary: #4B5563; /* لون النص الثانوي (للتحديد في الوضع النهاري) */
             --secondary-data-color: #D97706; 
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-main); 
-            color: var(--text-color);
+            color: var(--text-color-main);
             scroll-behavior: smooth;
             transition: background-color 0.3s, color 0.3s;
-            /* إضافة حشوة للهيدر الثابت */
             padding-top: 70px;
         }
         
@@ -49,10 +48,10 @@
         .text-primary { color: var(--primary-color); }
         .bg-primary { background-color: var(--primary-color); }
         
-        /* لون روابط التنقل والنصوص الثانوية عبر فئات مخصصة */
-        .dynamic-text-secondary { color: var(--text-secondary); }
-        .dynamic-text-primary { color: var(--text-color); }
-        .nav-link-color { color: var(--text-secondary); } 
+        /* فئات النصوص الديناميكية */
+        .dynamic-text-main { color: var(--text-color-main) !important; }
+        .dynamic-text-secondary { color: var(--text-color-secondary) !important; }
+        .nav-link-color { color: var(--text-color-secondary) !important; } 
         
         /* تأثير الأيقونات حسب الوضع */
         .skill-icon {
@@ -71,11 +70,11 @@
         .header-bg { 
             background-color: var(--bg-card-inner); /* استخدام الخلفية الشفافة */
             backdrop-filter: blur(10px); /* تأثير الزجاج */
-            position: fixed; /* تثبيت الهيدر */
+            position: fixed; 
             width: 100%;
             top: 0;
             left: 0;
-            z-index: 50; /* تأكد أنه فوق كل شيء */
+            z-index: 50; 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
         .footer-bg { background-color: var(--bg-secondary); }
@@ -92,8 +91,8 @@
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7); 
         }
         .light-mode .data-card {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
             border-color: #D1D5DB; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
         }
         .data-card:hover {
             box-shadow: 0 15px 45px rgba(0, 174, 239, 0.4); 
@@ -114,45 +113,12 @@
             background-color: var(--primary-color);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         }
-        .cv-button-style:hover { opacity: 0.9; }
-
-        /* الوضع النهاري: زر CV يجب أن يكون داكناً للتباين العالي على الخلفية الفاتحة */
         .light-mode .cv-button-style {
             background-color: var(--primary-color); 
             color: white; 
             box-shadow: 0 5px 15px rgba(30, 64, 175, 0.4);
         }
-        .light-mode .cv-button-style:hover { background-color: #1A368F; }
-        /* ------------------------------------------- */
-
-        /* ------------------------------------------- */
-        /* تعديل رابط GitHub قبل الفوتر */
-        /* ------------------------------------------- */
-        .github-link-style {
-            background-color: var(--bg-card-inner);
-            border: 1px solid var(--primary-color);
-            transition: all 0.3s;
-            color: var(--text-color); 
-        }
-        .light-mode .github-link-style {
-            background-color: #FFFFFF;
-            border: 1px solid var(--primary-color);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            color: var(--text-color);
-        }
-        .github-link-style:hover {
-            color: var(--primary-color); 
-            box-shadow: 0 0 15px rgba(0, 174, 239, 0.8);
-            transform: translateY(-2px);
-            background-color: #121212; 
-        }
-        .light-mode .github-link-style:hover {
-            color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(30, 64, 175, 0.3);
-            background-color: #F9FAFB; 
-        }
-
-
+        
         /* خط الكود لعرض الأرقام والنتائج */
         .font-code {
             font-family: monospace, sans-serif;
@@ -160,51 +126,28 @@
             text-shadow: 0 0 3px rgba(243, 156, 18, 0.5); 
         }
         .light-mode .font-code { text-shadow: none; }
-        /* تصحيح عرض البريد الإلكتروني لمنع التشويه */
         .email-link { word-break: break-all; }
 
         /* ------------------------------------------- */
         /* تنسيقات الرسوم البيانية المتحركة (Mock Charts) */
         /* ------------------------------------------- */
-        .chart-mock { 
-            position: absolute; 
-            opacity: 0.25; 
-            z-index: 0;
-            transition: opacity 0.3s;
-        }
-        
-        /* الرسوم الشريطية */
-        .chart-bar-segment {
-            transform-origin: bottom;
-            animation: bar-height 2s ease-in-out infinite alternate;
-        }
+        .chart-mock { position: absolute; opacity: 0.25; z-index: 0; transition: opacity 0.3s; }
+        .chart-bar-segment { transform-origin: bottom; animation: bar-height 2s ease-in-out infinite alternate; }
         @keyframes bar-height { from { transform: scaleY(0.4); } to { transform: scaleY(1.0); } }
-        
-        /* الرسوم الخطية (موجة البيانات) */
-        .chart-line-path-ecg { 
-            stroke-dasharray: 200; 
-            animation: chart-ecg-flow 8s linear infinite; 
-        }
-        @keyframes chart-ecg-flow {
-            0% { stroke-dashoffset: 200; }
-            100% { stroke-dashoffset: 0; }
-        }
-
-        /* الرسوم الدائرية (Pie/Donut) */
-        .chart-pie-slice { transform: rotate(-90deg); transform-origin: 50% 50%; animation: pie-slice-animate 4s ease-in-out infinite alternate; }
-        @keyframes pie-slice-animate { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 40; } }
+        .chart-line-path-ecg { stroke-dasharray: 200; animation: chart-ecg-flow 8s linear infinite; }
+        @keyframes chart-ecg-flow { 0% { stroke-dashoffset: 200; } 100% { stroke-dashoffset: 0; } }
 
         /* تموضع الرسم البياني الجديد */
         .chart-hero-line {
             position: fixed;
-            top: 70px; /* تحت الهيدر مباشرة */
+            top: 70px; 
             left: 0;
             width: 100%;
             height: 80px;
-            z-index: 40; /* تحت الهيدر وفوق المحتوى */
+            z-index: 40; 
             pointer-events: none;
             overflow: hidden;
-            background-color: var(--bg-main); /* لون الخلفية */
+            background-color: var(--bg-main); 
         }
         
     </style>
@@ -263,7 +206,7 @@
             <!-- النص والملخص -->
             <div class="md:w-3/5 text-center md:text-right">
                 <p class="text-base sm:text-xl font-bold mb-2 text-primary" data-i18n="hero_subtitle">محلل بيانات محترف من الجيزة</p>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-snug mb-6 text-white" data-i18n="hero_title">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-snug mb-6 dynamic-text-primary" data-i18n="hero_title">
                     أحوّل الأرقام إلى <span class="text-primary">رؤى استراتيجية</span>.
                 </h1>
                 
@@ -297,7 +240,7 @@
     <!-- قسم الخبرة العملية (Work Experience) -->
     <section id="experience" class="py-16 md:py-24 bg-card-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="exp_title">الخبرة العملية</h2>
+            <h2 class="text-4xl font-bold mb-12 dynamic-text-primary text-center border-b-4 border-primary inline-block pb-1" data-i18n="exp_title">الخبرة العملية</h2>
 
             <div class="max-w-3xl mx-auto space-y-8">
                 <div class="data-card p-6">
@@ -339,7 +282,7 @@
     <!-- قسم المهارات (Skills) -->
     <section id="skills" class="py-16 md:py-24 bg-bg-dark data-grid-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="skills_title">مجموعة أدوات تحليل البيانات</h2>
+            <h2 class="text-4xl font-bold mb-12 dynamic-text-primary text-center border-b-4 border-primary inline-block pb-1" data-i18n="skills_title">مجموعة أدوات تحليل البيانات</h2>
             
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                 
@@ -396,7 +339,7 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="certs_title">التعليم والشهادات</h2>
+            <h2 class="text-4xl font-bold mb-12 dynamic-text-primary text-center border-b-4 border-primary inline-block pb-1" data-i18n="certs_title">التعليم والشهادات</h2>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 
@@ -444,14 +387,14 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl font-bold mb-12 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="projects_title">دراسات حالة وتحليل مشاريع</h2>
+            <h2 class="text-4xl font-bold mb-12 dynamic-text-primary text-center border-b-4 border-primary inline-block pb-1" data-i18n="projects_title">دراسات حالة وتحليل مشاريع</h2>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- مشروع 1: تحليل سلوك العملاء -->
                 <div class="data-card rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-users-viewfinder text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold mb-3 text-primary" data-i18n="proj_1_title">1. تقسيم العملاء ونموذج الانقطاع</h3>
+                    <h3 class="text-2xl font-bold text-primary" data-i18n="proj_1_title">1. تقسيم العملاء ونموذج الانقطاع</h3>
                     <p class="dynamic-text-secondary mb-4 flex-grow" data-i18n="proj_1_desc">
                         تحليل RFM متقدم لتحديد شرائح العملاء الاستراتيجية وتطوير نماذج التنبؤ بخطر التوقف عن الشراء (Churn).
                         <span class="font-bold font-code block mt-2" data-i18n="proj_1_result">النتيجة: رفع معدل الاحتفاظ بالعملاء بـ 15%.</span>
@@ -469,7 +412,7 @@
                 <!-- مشروع 2: تحليل وسائل التواصل الاجتماعي -->
                 <div class="data-card rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-microchip text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold mb-3 text-primary" data-i18n="proj_2_title">2. تقييم المشاعر وتحليل NLP</h3>
+                    <h3 class="text-2xl font-bold text-primary" data-i18n="proj_2_title">2. تقييم المشاعر وتحليل NLP</h3>
                     <p class="dynamic-text-secondary mb-4 flex-grow" data-i18n="proj_2_desc">
                         استخدام مكتبات NLP (معالجة اللغة الطبيعية) لتقييم مشاعر العملاء من التعليقات وتحسين رسائل التسويق.
                         <span class="font-bold font-code block mt-2" data-i18n="proj_2_result">النتيجة: تحديد 3 نقاط ضعف في المنتج.</span>
@@ -487,7 +430,7 @@
                 <!-- مشروع 3: تحسين سلسلة الإمداد -->
                 <div class="data-card rounded-xl shadow-lg p-6 flex flex-col h-full">
                     <i class="fas fa-warehouse text-primary text-3xl mb-3"></i>
-                    <h3 class="text-2xl font-bold mb-3 text-primary" data-i18n="proj_3_title">3. نمذجة السلاسل الزمنية للمخزون</h3>
+                    <h3 class="text-2xl font-bold text-primary" data-i18n="proj_3_title">3. نمذجة السلاسل الزمنية للمخزون</h3>
                     <p class="dynamic-text-secondary mb-4 flex-grow" data-i18n="proj_3_desc">
                         تطبيق نماذج التنبؤ (Forecasting) على بيانات المبيعات التاريخية لتحسين كفاءة المخزون والحد من النقص/الفائض.
                         <span class="font-bold font-code block mt-2" data-i18n="proj_3_result">النتيجة: تقليل المخزون الفائض بـ 20%.</span>
@@ -508,7 +451,7 @@
     <!-- قسم السيرة الذاتية (CV) -->
     <section id="cv" class="py-16 bg-card-dark">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-6 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="cv_title">السيرة الذاتية (CV)</h2>
+            <h2 class="text-4xl font-bold mb-6 dynamic-text-primary text-center border-b-4 border-primary inline-block pb-1" data-i18n="cv_title">السيرة الذاتية (CV)</h2>
             <p class="text-xl dynamic-text-secondary mb-8" data-i18n="cv_desc">
                 للاطلاع على مسيرتي الأكاديمية والمهنية بالتفصيل، يمكنك تحميل نسختي المحدثة.
             </p>
@@ -522,7 +465,7 @@
     <!-- قسم التواصل (Contact) -->
     <section id="contact" class="py-16 md:py-24 bg-bg-dark data-grid-bg">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold mb-8 text-white text-center border-b-4 border-primary inline-block pb-1" data-i18n="contact_title">تواصل معي</h2>
+            <h2 class="text-4xl font-bold mb-8 dynamic-text-primary text-center border-b-4 border-primary inline-block pb-1" data-i18n="contact_title">تواصل معي</h2>
             <p class="text-xl dynamic-text-secondary mb-10" data-i18n="contact_desc">
                 أنا متاح لمناقشة فرص العمل، الاستشارات التحليلية، أو التعاون في مشاريع تحليل البيانات.
             </p>
@@ -568,7 +511,7 @@
     <!-- تذييل الصفحة (Footer) -->
     <footer class="footer-bg text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="mb-2 font-medium text-gray-500" data-i18n="footer_copyright">
+            <p class="mb-2 font-medium dynamic-text-secondary" data-i18n="footer_copyright">
                 &copy; 2025 معرض أعمال إبراهيم ثابت. جميع الحقوق محفوظة.
             </p>
            
@@ -770,8 +713,9 @@
     translatePage(currentLang);
 
     // الاستماع لزر تبديل اللغة
-    themeToggle.addEventListener('click', () => {
-        applyTheme(!isDarkMode);
+    langToggle.addEventListener('click', () => {
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        translatePage(newLang);
     });
 
 </script>
