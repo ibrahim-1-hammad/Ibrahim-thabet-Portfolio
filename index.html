@@ -39,6 +39,10 @@
             scroll-behavior: smooth;
             transition: background-color 0.3s, color 0.3s;
             padding-top: 70px;
+            /* الخاصية الجديدة لمنع التحديد عند النقر */
+            user-select: none;
+            -webkit-user-select: none; /* للمتصفحات القديمة */
+            -moz-user-select: none;
         }
         
         /* تطبيق ألوان الخلفيات على الأقسام */
@@ -69,13 +73,13 @@
         /* تصميم الهيدر الثابت بخلفية زجاجية */
         .header-bg { 
             background-color: var(--bg-card-inner); /* استخدام الخلفية الشفافة */
-            backdrop-filter: blur(15px); /* تأثير الزجاج */
+            backdrop-filter: blur(10px); /* تأثير الزجاج */
             position: fixed; 
             width: 100%;
             top: 0;
             left: 0;
             z-index: 50; 
-            box-shadow: 0 5px 7px -1px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
         .footer-bg { background-color: var(--bg-secondary); }
 
@@ -85,7 +89,7 @@
         .data-card {
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             background-color: var(--bg-card-inner); 
-            backdrop-filter: blur(10px); 
+            backdrop-filter: blur(8px); 
             border-radius: 1rem; 
             border: 1px solid #30363D; 
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7); 
@@ -131,11 +135,33 @@
         /* ------------------------------------------- */
         /* تنسيقات الرسوم البيانية المتحركة (Mock Charts) */
         /* ------------------------------------------- */
-        .chart-mock { position: absolute; opacity: 0.25; z-index: 0; transition: opacity 0.3s; }
-        .chart-bar-segment { transform-origin: bottom; animation: bar-height 2s ease-in-out infinite alternate; }
+        .chart-mock { 
+            position: absolute; 
+            opacity: 0.25; 
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        
+        /* الرسوم الشريطية */
+        .chart-bar-segment {
+            transform-origin: bottom;
+            animation: bar-height 2s ease-in-out infinite alternate;
+        }
         @keyframes bar-height { from { transform: scaleY(0.4); } to { transform: scaleY(1.0); } }
-        .chart-line-path-ecg { stroke-dasharray: 200; animation: chart-ecg-flow 8s linear infinite; }
-        @keyframes chart-ecg-flow { 0% { stroke-dashoffset: 200; } 100% { stroke-dashoffset: 0; } }
+        
+        /* الرسوم الخطية (موجة البيانات) */
+        .chart-line-path-ecg { 
+            stroke-dasharray: 200; 
+            animation: chart-ecg-flow 8s linear infinite; 
+        }
+        @keyframes chart-ecg-flow {
+            0% { stroke-dashoffset: 200; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* الرسوم الدائرية (Pie/Donut) */
+        .chart-pie-slice { transform: rotate(-90deg); transform-origin: 50% 50%; animation: pie-slice-animate 4s ease-in-out infinite alternate; }
+        @keyframes pie-slice-animate { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 40; } }
 
         /* تموضع الرسم البياني الجديد */
         .chart-hero-line {
@@ -635,7 +661,7 @@
 
         'cv_title': { ar: 'السيرة الذاتية (CV)', en: 'Resume (CV)' },
         'cv_desc': { ar: 'للاطلاع على مسيرتي الأكاديمية والمهنية بالتفصيل، يمكنك تحميل نسختي المحدثة.', en: 'For detailed view of my academic and professional career, please download my updated CV.' },
-        'cv_cta': { ar: '<i class="fas fa-cloud-arrow-down ml-3"></i> تحميل السيرة الذاتية (PDF)', en: '<i class="fas fa-cloud-arrow-down mr-3"></i> Download Resume (PDF)' },
+        'cv_cta': { ar: '<i class="fas fa-cloud-arrow-down ml-3"></i> تحميل السيرة الذاتية (PDF)', en: '<i class="fas fa-cloud-arrow-down mr-3"></i> Download CV (PDF)' },
 
         'contact_title': { ar: 'تواصل معي', en: 'Contact Me' },
         'contact_desc': { ar: 'أنا متاح لمناقشة فرص العمل، الاستشارات التحليلية، أو التعاون في مشاريع تحليل البيانات.', en: 'I am available to discuss job opportunities, analytical consulting, or collaboration on data analysis projects.' },
@@ -717,6 +743,29 @@
         const newLang = currentLang === 'ar' ? 'en' : 'ar';
         translatePage(newLang);
     });
+
+    // -------------------------------------------
+    // 4. منطق منع التحديد التلقائي والسماح به عند النقر المزدوج
+    // -------------------------------------------
+    document.addEventListener('dblclick', function(event) {
+        // إذا كان النقر المزدوج على عنصر نصي (مثل p, h, span), نسمح بالتحديد
+        const target = event.target;
+        if (target.tagName === 'P' || target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'H3' || target.tagName === 'SPAN') {
+            document.body.style.userSelect = 'text';
+            document.body.style.webkitUserSelect = 'text';
+            document.body.style.mozUserSelect = 'text';
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        // بعد رفع زر الفأرة (لإلغاء التحديد بعد انتهائه)
+        setTimeout(() => {
+             document.body.style.userSelect = 'none';
+             document.body.style.webkitUserSelect = 'none';
+             document.body.style.mozUserSelect = 'none';
+        }, 100); 
+    });
+
 
 </script>
 <!-- CSS Animation for the Line Chart in Hero Section -->
